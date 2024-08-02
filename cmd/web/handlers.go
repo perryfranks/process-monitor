@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"procmon.perryfanks.nerd/internal/models"
 	monitorapi "procmon.perryfanks.nerd/internal/monitorAPI"
@@ -12,10 +13,7 @@ import (
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
 
-	// data := app.newTemplateData(r)
-	// app.render(w, http.StatusOK, "home.html", data)
-	// page := templates.Hello("User")
-	page := templates.BasePage()
+	page := templates.BasePage(app.ProcessList)
 	app.renderTempl(w, http.StatusOK, page)
 }
 
@@ -29,8 +27,10 @@ func (app *application) startMonitor(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	process.Name = startMsg.Name
 	process.Workspace = startMsg.Workspace
 	process.Id = app.idCount
+	process.IdString = strconv.Itoa(process.Id)
 	app.idCount++
 
 	fmt.Println("New process: ", process)
@@ -65,7 +65,6 @@ func (app *application) endMonitor(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("removing process: ", endMsg.Id)
-	// app.ProcessList = append(app.ProcessList, process)
 
 	// delete that process
 	err = app.deleteProc(endMsg.Id)
@@ -88,5 +87,16 @@ func (app *application) endMonitor(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(jsonReturn)
+
+}
+
+// Render a list of the cards in the
+func (app *application) cardList(w http.ResponseWriter, r *http.Request) {
+
+	// get all the procs from app
+	// pass to the temple function
+	procList := app.ProcessList
+	cardList := templates.ProcessList(procList)
+	app.renderTempl(w, http.StatusOK, cardList)
 
 }

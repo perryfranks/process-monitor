@@ -1,10 +1,12 @@
 package templates
 
-templ BasePage() {
+import "procmon.perryfanks.nerd/internal/models"
+
+templ BasePage(processes []models.Process) {
 	<!DOCTYPE html>
 	<html lang="en">
 		@Head()
-		@Body()
+		@Body(processes)
 	</html>
 }
 
@@ -25,10 +27,12 @@ templ Head() {
 	</head>
 }
 
-templ Body() {
+templ Body(processes []models.Process) {
 	<body>
 		@Nav()
-		<p>Hello World from base</p>
+		<div class="flex grow justify-center bg-gray-100">
+			@PollProcessList(processes)
+		</div>
 	</body>
 }
 
@@ -36,4 +40,10 @@ templ Nav() {
 	<nav class="flex grow items-center space-x-4 bg-gray-500 border-black border-solid border-2">
 		<a class="mr-2 font-bold bg-white" href="/">Home</a>
 	</nav>
+}
+
+templ PollProcessList(processes []models.Process) {
+	<div class="bg-blue-200 m-4 grow w-full" hx-get="components/procs" hx-trigger="every 2s">
+		@ProcessList(processes)
+	</div>
 }

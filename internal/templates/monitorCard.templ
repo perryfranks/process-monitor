@@ -1,5 +1,7 @@
 package templates
 
+import "procmon.perryfanks.nerd/internal/models"
+
 templ Process(name string, workspace string, time string) {
 	<div class="border-solid border-black border-2 flex grow justify-start">
 		<p>
@@ -12,4 +14,14 @@ templ Process(name string, workspace string, time string) {
 			{ time }
 		</p>
 	</div>
+}
+
+templ ProcessList(processes []models.Process) {
+	for _, proc := range processes {
+		<div class="flex grow justify-center space-x-4 mx-auto w-3/5 bg-white py-4 rounded-lg shadow-md p-6">
+			<h2 class="text-center text-xl font-bold p-6 w-full">{ proc.Name }</h2>
+			<p class="text-gray-700">Workspace: { proc.Workspace }</p>
+			<p class="text-gray-700">ID: { proc.IdString }</p>
+		</div>
+	}
 }
