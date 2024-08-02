@@ -6,6 +6,6 @@ type StartMonitor struct {
 }
 
 type StartReturn struct {
-	Id      string `json:"ID"`
-	Success bool   `json:"success"`
+	Id      int  `json:"ID"`
+	Success bool `json:"success"`
 }

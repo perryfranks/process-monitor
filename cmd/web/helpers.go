@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"runtime/debug"
@@ -111,4 +112,18 @@ func (app *application) newTemplateData(r *http.Request) *templateData {
 		Processes:   &app.ProcessList,
 		DisplayVars: &app.DisplayVars,
 	}
+}
+
+func (app *application) deleteProc(id int) error {
+
+	for i, elem := range app.ProcessList {
+		if elem.Id == id {
+			app.ProcessList = append(app.ProcessList[:i], app.ProcessList[i+1])
+			return nil
+		}
+
+	}
+
+	return errors.New("No process found with that ID")
+
 }

@@ -17,6 +17,7 @@ type application struct {
 	// partialsCache map[string]*template.Template
 
 	ProcessList []models.Process
+	idCount     int
 	DisplayVars DisplayVars
 }
 
@@ -43,6 +44,7 @@ func main() {
 		templateCache: templateCache,
 		// partialsCache: partialsCache,
 		ProcessList: []models.Process{},
+		idCount:     1,
 
 		DisplayVars: dv,
 	}
