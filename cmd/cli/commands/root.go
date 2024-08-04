@@ -9,6 +9,7 @@ import (
 
 func init() {
 	// rootCmd.AddCommand(whatever)
+	rootCmd.AddCommand(waitCmd)
 }
 
 var rootCmd = &cobra.Command{
