@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 
@@ -21,7 +22,10 @@ var waitCmd = &cobra.Command{
 		}
 
 		sendStart("SleepTest", "Local CLI")
-		time.Sleep(time.Duration(sleepTime))
-		sendEnd(monitorID, "")
+		fmt.Println("ProcessID: ", monitorID)
+		time.Sleep(time.Duration(sleepTime) * time.Second)
+		fmt.Println("sleep over")
+		sendEnd(monitorID, "dud")
+
 	},
 }

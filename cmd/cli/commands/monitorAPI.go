@@ -49,7 +49,7 @@ func sendStart(name string, workspace string) {
 		log.Fatalf("Failed to read response body. %v", err)
 	}
 
-	log.Println(body)
+	log.Println("body: ", body)
 
 	var startReturn monitorapi.StartReturn
 	err = json.Unmarshal(body, &startReturn)
@@ -96,13 +96,12 @@ func sendEnd(id int, output string) {
 		log.Fatalf("Failed to read response body. %v", err)
 	}
 
-	log.Println(body)
-
 	var endReturn monitorapi.Success
 	err = json.Unmarshal(body, &endReturn)
 	if err != nil {
 		log.Fatalf("Failed to unmarshal response body. %v", err)
 	}
+	log.Println(endReturn)
 
 	if !endReturn.Success {
 		log.Fatalf("Transaction unsuccessful")
