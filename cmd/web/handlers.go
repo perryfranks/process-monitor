@@ -13,7 +13,7 @@ import (
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
 
-	page := templates.BasePage(app.ProcessList)
+	page := templates.BasePage(app.ProcessList, app.FinishedList)
 	app.renderTempl(w, http.StatusOK, page)
 }
 
@@ -67,7 +67,7 @@ func (app *application) endMonitor(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("removing process: ", endMsg.Id)
 
 	// delete that process
-	err = app.deleteProc(endMsg.Id)
+	err = app.finishProc(endMsg.Id)
 	if err != nil {
 		fmt.Println("couldn't delete")
 		app.clientError(w, http.StatusBadRequest)
@@ -96,6 +96,16 @@ func (app *application) cardList(w http.ResponseWriter, r *http.Request) {
 	// get all the procs from app
 	// pass to the temple function
 	procList := app.ProcessList
+	cardList := templates.ProcessList(procList)
+	app.renderTempl(w, http.StatusOK, cardList)
+
+}
+
+func (app *application) finishedProcsCardList(w http.ResponseWriter, r *http.Request) {
+
+	// get all the procs from app
+	// pass to the temple function
+	procList := app.FinishedList
 	cardList := templates.ProcessList(procList)
 	app.renderTempl(w, http.StatusOK, cardList)
 

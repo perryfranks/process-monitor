@@ -27,66 +27,9 @@ func (app *application) notFound(w http.ResponseWriter) {
 	app.clientError(w, http.StatusNotFound)
 }
 
-func (app *application) render(w http.ResponseWriter, status int, page string, data *templateData) {
-
-	// get template from cache if it exists
-	ts, ok := app.templateCache[page]
-	if !ok {
-		err := fmt.Errorf("The template %s does not exist", page)
-		app.serverError(w, err)
-		return
-	}
-
-	buf := new(bytes.Buffer)
-
-	err := ts.ExecuteTemplate(buf, "base", data)
-	if err != nil {
-		app.serverError(w, err)
-		return
-	}
-
-	w.WriteHeader(status)
-	// fmt.Println(buf)
-	buf.WriteTo(w)
-
-}
-
-//
-// // try and execute the block level template not the base
-// // it would be possible to get the name of the template and then take that as the template name
-// // but that would be an invisible constraint
-// func (app *application) renderBlock(w http.ResponseWriter, status int, page string, templateName string, data *templateData) {
-//
-// 	// get template from cache if it exists
-// 	// ts, ok := app.templateCache[page]
-// 	// ts, ok := app.partialsCache[page]
-// 	ts, ok := app.templateCache[page]
-// 	if !ok {
-// 		err := fmt.Errorf("The template %s does not exist", page)
-// 		app.serverError(w, err)
-// 		return
-// 	}
-//
-// 	buf := new(bytes.Buffer)
-//
-// 	err := ts.ExecuteTemplate(buf, templateName, data)
-// 	// err := ts.Execute(buf, data)
-// 	if err != nil {
-// 		app.serverError(w, err)
-// 		return
-// 	}
-//
-// 	w.WriteHeader(status)
-// 	// fmt.Println(buf)
-// 	buf.WriteTo(w)
-//
-// }
-
 func (app *application) renderTempl(w http.ResponseWriter, status int, page templ.Component) {
 
 	// get template from cache if it exists
-	// ts, ok := app.templateCache[page]
-	// ts, ok := app.partialsCache[page]
 	buf := new(bytes.Buffer)
 
 	// Render the component into the buffer
@@ -103,21 +46,22 @@ func (app *application) renderTempl(w http.ResponseWriter, status int, page temp
 	buf.WriteTo(w)
 }
 
-// func (app *application) renderCompon
-
 // Create a new data struct for any common data that we don't mind passing to all templates
 func (app *application) newTemplateData(r *http.Request) *templateData {
 
 	return &templateData{
-		Processes:   &app.ProcessList,
-		DisplayVars: &app.DisplayVars,
+		Processes:     &app.ProcessList,
+		DisplayVars:   &app.DisplayVars,
+		FinishedProcs: &app.FinishedList,
 	}
 }
 
-func (app *application) deleteProc(id int) error {
+func (app *application) finishProc(id int) error {
 
 	for i, elem := range app.ProcessList {
 		if elem.Id == id {
+			// move to the finished list
+			app.FinishedList = append(app.FinishedList, app.ProcessList[i])
 			app.ProcessList = append(app.ProcessList[:i], app.ProcessList[i+1:]...)
 			return nil
 		}

@@ -2,11 +2,11 @@ package templates
 
 import "procmon.perryfanks.nerd/internal/models"
 
-templ BasePage(processes []models.Process) {
+templ BasePage(processes []models.Process, finishedProcs []models.Process) {
 	<!DOCTYPE html>
-	<html lang="en">
+	<html lang="en" class="bg-gray-700 h-full overflow-y-scroll">
 		@Head()
-		@Body(processes)
+		@Body(processes, finishedProcs)
 	</html>
 }
 
@@ -27,23 +27,39 @@ templ Head() {
 	</head>
 }
 
-templ Body(processes []models.Process) {
+templ Header() {
+	<div class="flex grow justify-center py-3 text-center bg-tLilac">
+		<h1 class="font-bold text-3xl text-tGothicGreen hover:text-tOlive active:text-tTan"><a href="/">Process Monitor</a></h1>
+	</div>
+}
+
+templ Body(activeProcesses []models.Process, finishedProcs []models.Process) {
+	@Header()
 	<body>
 		@Nav()
-		<div class="flex grow justify-center bg-gray-100">
-			@PollProcessList(processes)
+		<div class="w-full text-center mt-3">
+			<h1 class="text-xl font-semibold text-tPalePink">
+				Process List:
+			</h1>
+		</div>
+		<!-- <div class="flex grow justify-center bg-tPink mt-5 mx-10 rounded"> -->
+		<div class="flex grow justify-center mt-3 ">
+			@PollProcessList(activeProcesses, "components/procs")
+		</div>
+		<div class="w-full text-center mt-3">
+			<h1 class="text-xl font-semibold text-tPalePink">
+				Finished Processes:
+			</h1>
+		</div>
+		<!-- <div class="flex grow justify-center bg-tPink mt-5 mx-10 rounded"> -->
+		<div class="flex grow justify-center mt-3 ">
+			@PollProcessList(finishedProcs, "components/finishedprocs")
 		</div>
 	</body>
 }
 
 templ Nav() {
-	<nav class="flex grow items-center space-x-4 bg-gray-500 border-black border-solid border-2">
-		<a class="mr-2 font-bold bg-white" href="/">Home</a>
+	<nav class="flex grow items-center space-x-4 bg-tLavender p-2 text-lg">
+		<a class="ml-6 mr-2 font-bold hover:text-tPink active:text-tPalePink text-" href="/">Home</a>
 	</nav>
-}
-
-templ PollProcessList(processes []models.Process) {
-	<div class="bg-blue-200 m-4 grow w-full" hx-get="components/procs" hx-trigger="every 2s">
-		@ProcessList(processes)
-	</div>
 }

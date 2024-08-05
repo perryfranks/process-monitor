@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -11,14 +10,13 @@ import (
 )
 
 type application struct {
-	errorLog      *log.Logger
-	infoLog       *log.Logger
-	templateCache map[string]*template.Template
-	// partialsCache map[string]*template.Template
+	errorLog *log.Logger
+	infoLog  *log.Logger
 
-	ProcessList []models.Process
-	idCount     int
-	DisplayVars DisplayVars
+	ProcessList  []models.Process
+	FinishedList []models.Process
+	idCount      int
+	DisplayVars  DisplayVars
 }
 
 func main() {
@@ -30,24 +28,24 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
-	// template cache
-	templateCache, err := newTemplateData()
-	if err != nil {
-		errorLog.Fatal(err)
-	}
-
 	dv := DisplayVars{}
 
 	app := &application{
-		errorLog:      errorLog,
-		infoLog:       infoLog,
-		templateCache: templateCache,
-		// partialsCache: partialsCache,
-		ProcessList: []models.Process{},
-		idCount:     1,
+		errorLog:     errorLog,
+		infoLog:      infoLog,
+		ProcessList:  []models.Process{},
+		FinishedList: []models.Process{},
+		idCount:      1,
 
 		DisplayVars: dv,
 	}
+
+	app.ProcessList = append(app.ProcessList, models.Process{
+		Name:      "test",
+		Workspace: "test",
+		Id:        -1,
+		IdString:  "-1",
+	})
 
 	srv := &http.Server{
 		Addr:     *addr,
@@ -56,7 +54,7 @@ func main() {
 	}
 
 	infoLog.Println("Starting server sever on ", *addr)
-	err = srv.ListenAndServe()
+	err := srv.ListenAndServe()
 	// err := http.ListenAndServe(*addr, mux)
 	errorLog.Fatal(err)
 }
