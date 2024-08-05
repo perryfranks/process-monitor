@@ -10,6 +10,7 @@ import (
 func init() {
 	// rootCmd.AddCommand(whatever)
 	rootCmd.AddCommand(waitCmd)
+	rootCmd.AddCommand(monitorCmd)
 }
 
 var rootCmd = &cobra.Command{
