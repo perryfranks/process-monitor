@@ -18,11 +18,12 @@ const baseUrl = "http://localhost:4000"
 
 var monitorID int
 
-func startPayload(name string, workspaceName string, user string) []byte {
+func startPayload(name string, workspaceName string, user string, pid string) []byte {
 	s := monitorapi.StartMonitor{
 		Name:      name,
 		Workspace: workspaceName,
 		User:      user,
+		Pid:       pid,
 	}
 
 	fmt.Println("Sending start message: ", s)
@@ -64,13 +65,13 @@ func getProcEnv() (hostname string, userName string) {
 }
 
 // send the message to start the api service
-func sendStart(name string) {
+func sendStart(name string, pid string) {
 
 	workspace, user := getProcEnv()
 
 	log.Print(baseUrl)
 
-	payload := startPayload(name, workspace, user)
+	payload := startPayload(name, workspace, user, pid)
 	resp, err := http.Post(baseUrl+"/api/start", "application/json", bytes.NewReader(payload))
 	if err != nil {
 		panic(err)

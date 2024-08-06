@@ -21,7 +21,7 @@ var waitCmd = &cobra.Command{
 			panic(1)
 		}
 
-		sendStart("SleepTest")
+		sendStart("SleepTest", "1")
 		fmt.Println("ProcessID: ", monitorID)
 		time.Sleep(time.Duration(sleepTime) * time.Second)
 		fmt.Println("sleep over")

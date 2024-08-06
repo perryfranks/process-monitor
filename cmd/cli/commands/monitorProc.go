@@ -5,6 +5,7 @@ import (
 	"log"
 	"os/exec"
 	"strings"
+	"sync"
 
 	"github.com/spf13/cobra"
 )
@@ -28,13 +29,29 @@ func monitorProcess(args []string) {
 	if len(args) == 1 {
 		args = parseQuoteCmd(args[0])
 	}
-	// run the command provided in the args
-	cmd := exec.Command(args[0], args[1:]...)
-	// when it runs send the start monitor
-	sendStart(cmd.Path)
-	// TODO: if this is goroutine then we capture the output we might be able to
-	// get PID and output + enable kill feature
-	output, err := cmd.CombinedOutput()
+
+	var wg sync.WaitGroup
+	wg.Add(1)
+	var output []byte
+	var err error
+
+	var cmd *exec.Cmd
+	cmd = exec.Command(args[0], args[1:]...)
+
+	go func() {
+		defer wg.Done()
+		output, err = cmd.CombinedOutput()
+	}()
+
+	// pid := cmd.Process.Pid
+	//
+	// fmt.Println(pid)
+
+	sendStart(cmd.Path, "1")
+
+	wg.Wait()
+
+	// output, err = cmd.CombinedOutput()
 	if err != nil {
 		sendEnd(monitorID, "Error running command.")
 		log.Fatalf("Error running command. Command: %v. Error: %v", cmd, err)
