@@ -25,7 +25,7 @@ var waitCmd = &cobra.Command{
 		fmt.Println("ProcessID: ", monitorID)
 		time.Sleep(time.Duration(sleepTime) * time.Second)
 		fmt.Println("sleep over")
-		sendEnd(monitorID, "dud")
+		sendEnd(monitorID, "dud output")
 
 	},
 }

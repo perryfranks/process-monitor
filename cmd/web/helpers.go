@@ -9,6 +9,7 @@ import (
 	"runtime/debug"
 
 	"github.com/a-h/templ"
+	"procmon.perryfanks.nerd/internal/models"
 )
 
 func (app *application) serverError(w http.ResponseWriter, err error) {
@@ -56,18 +57,26 @@ func (app *application) newTemplateData(r *http.Request) *templateData {
 	}
 }
 
-func (app *application) finishProc(id int) error {
+func (app *application) finishProc(id int) (*models.Process, error) {
 
 	for i, elem := range app.ProcessList {
 		if elem.Id == id {
+
 			// move to the finished list
 			app.FinishedList = append(app.FinishedList, app.ProcessList[i])
+			// update the finished time
+			proc := &app.FinishedList[len(app.FinishedList)-1]
+			// TODO: is this needed? if so refactor so its not
+			if proc.Id != id {
+				proc = &app.FinishedList[i-1] // HOPE
+			}
 			app.ProcessList = append(app.ProcessList[:i], app.ProcessList[i+1:]...)
-			return nil
+
+			return proc, nil
 		}
 
 	}
 
-	return errors.New("No process found with that ID")
+	return nil, errors.New("No process found with that ID")
 
 }

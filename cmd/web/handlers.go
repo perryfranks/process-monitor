@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"procmon.perryfanks.nerd/internal/models"
 	monitorapi "procmon.perryfanks.nerd/internal/monitorAPI"
@@ -29,9 +30,14 @@ func (app *application) startMonitor(w http.ResponseWriter, r *http.Request) {
 
 	process.Name = startMsg.Name
 	process.Workspace = startMsg.Workspace
+	process.User = startMsg.User
 	process.Id = app.idCount
 	process.IdString = strconv.Itoa(process.Id)
+	process.Pid = startMsg.Pid
 	app.idCount++
+
+	// assign a start time
+	process.StartTime = time.Now()
 
 	fmt.Println("New process: ", process)
 	app.ProcessList = append(app.ProcessList, process)
@@ -67,13 +73,17 @@ func (app *application) endMonitor(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("removing process: ", endMsg.Id)
 
 	// delete that process
-	err = app.finishProc(endMsg.Id)
+	finishedProc, err := app.finishProc(endMsg.Id)
 	if err != nil {
 		fmt.Println("couldn't delete")
 		app.clientError(w, http.StatusBadRequest)
 		return
 
 	}
+	// update anything
+	finishedProc.FinishTime = time.Now()
+	finishedProc.Finished = true
+	finishedProc.CapturedOut = endMsg.ReturnValue
 
 	// return id as ack
 	ack := monitorapi.Success{

@@ -3,12 +3,14 @@ package commands
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
 	"os/user"
 
+	"github.com/davecgh/go-spew/spew"
 	monitorapi "procmon.perryfanks.nerd/internal/monitorAPI"
 )
 
@@ -22,6 +24,9 @@ func startPayload(name string, workspaceName string, user string) []byte {
 		Workspace: workspaceName,
 		User:      user,
 	}
+
+	fmt.Println("Sending start message: ", s)
+
 	payload, err := json.Marshal(s)
 	if err != nil {
 		panic(err)
@@ -39,10 +44,20 @@ func getProcEnv() (hostname string, userName string) {
 	}
 
 	useruser, err := user.Current()
+	// fmt.Println(useruser)
+	spew.Dump(useruser)
 	if err != nil {
-		userName = ""
+		userName = "Unknown"
+	} else {
+		// Not always set depending on the system
+		if useruser.Name != "" {
+			userName = useruser.Name
+		} else if useruser.Username != "" {
+			userName = useruser.Username
+		} else {
+			userName = "Unknown"
+		}
 	}
-	userName = useruser.Name
 
 	return hostname, userName
 
