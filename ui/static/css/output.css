@@ -554,12 +554,13 @@ video {
   --tw-contain-style:  ;
 }
 
-.m-2 {
-  margin: 0.5rem;
-}
-
 .m-4 {
   margin: 1rem;
+}
+
+.mx-10 {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
 }
 
 .mx-auto {
@@ -567,19 +568,8 @@ video {
   margin-right: auto;
 }
 
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.mx-5 {
-  margin-left: 1.25rem;
-  margin-right: 1.25rem;
-}
-
-.mx-10 {
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
+.ml-6 {
+  margin-left: 1.5rem;
 }
 
 .mr-2 {
@@ -592,10 +582,6 @@ video {
 
 .mt-5 {
   margin-top: 1.25rem;
-}
-
-.ml-6 {
-  margin-left: 1.5rem;
 }
 
 .flex {
@@ -646,30 +632,12 @@ video {
   overflow-y: scroll;
 }
 
-.rounded-lg {
-  border-radius: 0.5rem;
-}
-
 .rounded {
   border-radius: 0.25rem;
 }
 
-.border-2 {
-  border-width: 2px;
-}
-
-.border-solid {
-  border-style: solid;
-}
-
-.border-black {
-  --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity));
-}
-
-.border-tLavender {
-  --tw-border-opacity: 1;
-  border-color: rgb(116 105 182 / var(--tw-border-opacity));
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
 .border-tGothicGreen {
@@ -677,29 +645,9 @@ video {
   border-color: rgb(26 54 54 / var(--tw-border-opacity));
 }
 
-.bg-blue-200 {
+.bg-gray-700 {
   --tw-bg-opacity: 1;
-  background-color: rgb(191 219 254 / var(--tw-bg-opacity));
-}
-
-.bg-gray-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
-.bg-green-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(187 247 208 / var(--tw-bg-opacity));
-}
-
-.bg-tLilac {
-  --tw-bg-opacity: 1;
-  background-color: rgb(173 136 198 / var(--tw-bg-opacity));
-}
-
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
 }
 
 .bg-tLavender {
@@ -707,29 +655,9 @@ video {
   background-color: rgb(116 105 182 / var(--tw-bg-opacity));
 }
 
-.bg-tGothicGreen {
+.bg-tLilac {
   --tw-bg-opacity: 1;
-  background-color: rgb(26 54 54 / var(--tw-bg-opacity));
-}
-
-.bg-tPink {
-  --tw-bg-opacity: 1;
-  background-color: rgb(225 175 209 / var(--tw-bg-opacity));
-}
-
-.bg-tSage {
-  --tw-bg-opacity: 1;
-  background-color: rgb(64 83 76 / var(--tw-bg-opacity));
-}
-
-.bg-tOlive {
-  --tw-bg-opacity: 1;
-  background-color: rgb(103 125 106 / var(--tw-bg-opacity));
-}
-
-.bg-gray-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+  background-color: rgb(173 136 198 / var(--tw-bg-opacity));
 }
 
 .bg-tPalePink {
@@ -737,22 +665,13 @@ video {
   background-color: rgb(255 230 230 / var(--tw-bg-opacity));
 }
 
-.p-6 {
-  padding: 1.5rem;
+.bg-tPink {
+  --tw-bg-opacity: 1;
+  background-color: rgb(225 175 209 / var(--tw-bg-opacity));
 }
 
 .p-2 {
   padding: 0.5rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
 }
 
 .px-4 {
@@ -765,13 +684,13 @@ video {
   padding-bottom: 0.25rem;
 }
 
-.text-center {
-  text-align: center;
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+.text-center {
+  text-align: center;
 }
 
 .text-3xl {
@@ -781,6 +700,11 @@ video {
 
 .text-lg {
   font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
   line-height: 1.75rem;
 }
 
@@ -817,24 +741,19 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.shadow-tLavender {
-  --tw-shadow-color: #7469B6;
-  --tw-shadow: var(--tw-shadow-colored);
-}
-
 .shadow-tGothicGreen {
   --tw-shadow-color: #1A3636;
   --tw-shadow: var(--tw-shadow-colored);
 }
 
-.hover\:text-tPink:hover {
-  --tw-text-opacity: 1;
-  color: rgb(225 175 209 / var(--tw-text-opacity));
-}
-
 .hover\:text-tOlive:hover {
   --tw-text-opacity: 1;
   color: rgb(103 125 106 / var(--tw-text-opacity));
+}
+
+.hover\:text-tPink:hover {
+  --tw-text-opacity: 1;
+  color: rgb(225 175 209 / var(--tw-text-opacity));
 }
 
 .active\:text-tPalePink:active {

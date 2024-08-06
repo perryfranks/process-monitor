@@ -31,7 +31,9 @@ func monitorProcess(args []string) {
 	// run the command provided in the args
 	cmd := exec.Command(args[0], args[1:]...)
 	// when it runs send the start monitor
-	sendStart(cmd.Path, "localworkstation")
+	sendStart(cmd.Path)
+	// TODO: if this is goroutine then we capture the output we might be able to
+	// get PID and output + enable kill feature
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		sendEnd(monitorID, "Error running command.")

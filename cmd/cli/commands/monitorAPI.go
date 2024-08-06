@@ -6,6 +6,8 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
+	"os/user"
 
 	monitorapi "procmon.perryfanks.nerd/internal/monitorAPI"
 )
@@ -14,10 +16,11 @@ const baseUrl = "http://localhost:4000"
 
 var monitorID int
 
-func startPayload(name string, workspaceName string) []byte {
+func startPayload(name string, workspaceName string, user string) []byte {
 	s := monitorapi.StartMonitor{
 		Name:      name,
 		Workspace: workspaceName,
+		User:      user,
 	}
 	payload, err := json.Marshal(s)
 	if err != nil {
@@ -27,12 +30,32 @@ func startPayload(name string, workspaceName string) []byte {
 	return payload
 }
 
+// get the user and workspace
+func getProcEnv() (hostname string, userName string) {
+
+	hostname, err := os.Hostname()
+	if err != nil {
+		hostname = ""
+	}
+
+	useruser, err := user.Current()
+	if err != nil {
+		userName = ""
+	}
+	userName = useruser.Name
+
+	return hostname, userName
+
+}
+
 // send the message to start the api service
-func sendStart(name string, workspace string) {
+func sendStart(name string) {
+
+	workspace, user := getProcEnv()
 
 	log.Print(baseUrl)
 
-	payload := startPayload(name, workspace)
+	payload := startPayload(name, workspace, user)
 	resp, err := http.Post(baseUrl+"/api/start", "application/json", bytes.NewReader(payload))
 	if err != nil {
 		panic(err)

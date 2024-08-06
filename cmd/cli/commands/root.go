@@ -8,7 +8,6 @@ import (
 )
 
 func init() {
-	// rootCmd.AddCommand(whatever)
 	rootCmd.AddCommand(waitCmd)
 	rootCmd.AddCommand(monitorCmd)
 }
@@ -22,10 +21,8 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if err := monitorCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
-		var a string
-		fmt.Scanf("Press any key %s", a)
 		os.Exit(1)
 	}
 }
