@@ -554,6 +554,10 @@ video {
   --tw-contain-style:  ;
 }
 
+.relative {
+  position: relative;
+}
+
 .m-4 {
   margin: 1rem;
 }
@@ -561,6 +565,11 @@ video {
 .mx-10 {
   margin-left: 2.5rem;
   margin-right: 2.5rem;
+}
+
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .mx-auto {
@@ -589,6 +598,10 @@ video {
   margin-top: 1.25rem;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .flex {
   display: flex;
 }
@@ -599,6 +612,10 @@ video {
 
 .h-full {
   height: 100%;
+}
+
+.max-h-96 {
+  max-height: 24rem;
 }
 
 .w-3\/5 {
@@ -639,6 +656,10 @@ video {
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.overflow-scroll {
+  overflow: scroll;
+}
+
 .overflow-y-scroll {
   overflow-y: scroll;
 }
@@ -649,6 +670,10 @@ video {
 
 .rounded-lg {
   border-radius: 0.5rem;
+}
+
+.border-solid {
+  border-style: solid;
 }
 
 .border-tGothicGreen {
@@ -679,6 +704,11 @@ video {
 .bg-tPink {
   --tw-bg-opacity: 1;
   background-color: rgb(225 175 209 / var(--tw-bg-opacity));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .p-2 {
@@ -718,11 +748,6 @@ video {
   line-height: 1.75rem;
 }
 
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -736,9 +761,24 @@ video {
   font-weight: 600;
 }
 
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.text-green-800 {
+  --tw-text-opacity: 1;
+  color: rgb(22 101 52 / var(--tw-text-opacity));
+}
+
+.text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
 .text-tGothicGreen {
@@ -754,10 +794,6 @@ video {
 .text-tPink {
   --tw-text-opacity: 1;
   color: rgb(225 175 209 / var(--tw-text-opacity));
-}
-
-.underline {
-  text-decoration-line: underline;
 }
 
 .shadow-md {
@@ -779,6 +815,41 @@ details>summary::-webkit-details-marker {
   display: none;
 }
 
+.tooltip {
+  position: relative;
+  display: inline-block;
+  /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip .tooltiptext {
+  width: 120px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+  /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
 .hover\:text-tLavender:hover {
   --tw-text-opacity: 1;
   color: rgb(116 105 182 / var(--tw-text-opacity));
@@ -794,10 +865,6 @@ details>summary::-webkit-details-marker {
   color: rgb(225 175 209 / var(--tw-text-opacity));
 }
 
-.hover\:underline:hover {
-  text-decoration-line: underline;
-}
-
 .active\:text-tPalePink:active {
   --tw-text-opacity: 1;
   color: rgb(255 230 230 / var(--tw-text-opacity));
@@ -811,8 +878,4 @@ details>summary::-webkit-details-marker {
 .active\:text-tTan:active {
   --tw-text-opacity: 1;
   color: rgb(214 189 152 / var(--tw-text-opacity));
-}
-
-.active\:underline:active {
-  text-decoration-line: underline;
 }
