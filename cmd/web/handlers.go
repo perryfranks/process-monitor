@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/davecgh/go-spew/spew"
 	"procmon.perryfanks.nerd/internal/models"
 	monitorapi "procmon.perryfanks.nerd/internal/monitorAPI"
 	"procmon.perryfanks.nerd/internal/templates"
@@ -83,7 +84,10 @@ func (app *application) endMonitor(w http.ResponseWriter, r *http.Request) {
 	// update anything
 	finishedProc.FinishTime = time.Now()
 	finishedProc.Finished = true
-	finishedProc.CapturedOut = endMsg.ReturnValue
+	finishedProc.CapturedOut = endMsg.Output
+	finishedProc.ExitStatus = endMsg.ExitStatus
+
+	spew.Dump(finishedProc)
 
 	// return id as ack
 	ack := monitorapi.Success{

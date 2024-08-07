@@ -718,6 +718,11 @@ video {
   line-height: 1.75rem;
 }
 
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -746,6 +751,11 @@ video {
   color: rgb(255 230 230 / var(--tw-text-opacity));
 }
 
+.text-tPink {
+  --tw-text-opacity: 1;
+  color: rgb(225 175 209 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -761,6 +771,19 @@ video {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+details>summary {
+  list-style: none;
+}
+
+details>summary::-webkit-details-marker {
+  display: none;
+}
+
+.hover\:text-tLavender:hover {
+  --tw-text-opacity: 1;
+  color: rgb(116 105 182 / var(--tw-text-opacity));
+}
+
 .hover\:text-tOlive:hover {
   --tw-text-opacity: 1;
   color: rgb(103 125 106 / var(--tw-text-opacity));
@@ -771,12 +794,25 @@ video {
   color: rgb(225 175 209 / var(--tw-text-opacity));
 }
 
+.hover\:underline:hover {
+  text-decoration-line: underline;
+}
+
 .active\:text-tPalePink:active {
   --tw-text-opacity: 1;
   color: rgb(255 230 230 / var(--tw-text-opacity));
 }
 
+.active\:text-tPink:active {
+  --tw-text-opacity: 1;
+  color: rgb(225 175 209 / var(--tw-text-opacity));
+}
+
 .active\:text-tTan:active {
   --tw-text-opacity: 1;
   color: rgb(214 189 152 / var(--tw-text-opacity));
+}
+
+.active\:underline:active {
+  text-decoration-line: underline;
 }

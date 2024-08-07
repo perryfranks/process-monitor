@@ -103,11 +103,14 @@ func sendStart(name string, pid string) {
 	monitorID = startReturn.Id
 }
 
-func endPayload(id int, output string) []byte {
+func endPayload(id int, output string, exitCode int) []byte {
 	s := monitorapi.EndMonitor{
-		Id:          id,
-		ReturnValue: output,
+		Id:         id,
+		Output:     output,
+		ExitStatus: exitCode,
 	}
+
+	spew.Dump(s)
 	payload, err := json.Marshal(s)
 	if err != nil {
 		panic(err)
@@ -116,9 +119,9 @@ func endPayload(id int, output string) []byte {
 	return payload
 }
 
-func sendEnd(id int, output string) {
+func sendEnd(id int, output string, exitCode int) {
 
-	payload := endPayload(id, output)
+	payload := endPayload(id, output, exitCode)
 	resp, err := http.Post(baseUrl+"/api/end", "application/json", bytes.NewReader(payload))
 	if err != nil {
 		panic(err)

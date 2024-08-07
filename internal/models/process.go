@@ -1,6 +1,7 @@
 package models
 
 import (
+	"strconv"
 	"time"
 )
 
@@ -17,4 +18,9 @@ type Process struct {
 	IdString    string    // Just for templ
 	Finished    bool
 	CapturedOut string
+	ExitStatus  int
+}
+
+func (p *Process) ExitStatusStr() string {
+	return strconv.Itoa(p.ExitStatus)
 }

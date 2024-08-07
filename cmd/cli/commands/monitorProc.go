@@ -1,9 +1,11 @@
 package commands
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"os/exec"
+	"strconv"
 	"strings"
 	"sync"
 
@@ -34,32 +36,38 @@ func monitorProcess(args []string) {
 	wg.Add(1)
 	var output []byte
 	var err error
+	var cmdErr, cmdOut bytes.Buffer
 
 	var cmd *exec.Cmd
 	cmd = exec.Command(args[0], args[1:]...)
+	cmd.Stdout = &cmdOut
+	cmd.Stderr = &cmdErr
 
-	go func() {
-		defer wg.Done()
-		output, err = cmd.CombinedOutput()
-	}()
-
+	// go func() {
+	// 	defer wg.Done()
+	// 	output, err = cmd.CombinedOutput()
+	// }()
+	//
 	// pid := cmd.Process.Pid
 	//
 	// fmt.Println(pid)
-
-	sendStart(cmd.Path, "1")
-
-	wg.Wait()
-
-	// output, err = cmd.CombinedOutput()
-	if err != nil {
-		sendEnd(monitorID, "Error running command.")
-		log.Fatalf("Error running command. Command: %v. Error: %v", cmd, err)
+	if err := cmd.Start(); err != nil {
+		log.Fatalf("Failed to start command - %v", err)
 	}
+	pid := strconv.Itoa(cmd.Process.Pid)
+	sendStart(cmd.Path, pid)
+
+	if err = cmd.Wait(); err != nil {
+		sendEnd(monitorID, "Error running command.", cmd.ProcessState.ExitCode())
+		log.Fatalf("Command finished unsuccessfully - %v", err)
+	}
+
+	outputString := cmdOut.String() + cmdErr.String()
+	output = []byte(outputString)
 
 	// when it finishes run the end
 	fmt.Println("Output: ", string(output))
-	sendEnd(monitorID, string(output))
+	sendEnd(monitorID, string(output), cmd.ProcessState.ExitCode())
 	// expand from there
 
 }
