@@ -6,7 +6,7 @@ templ BasePage(processes []models.Process, finishedProcs []models.Process) {
 	<!DOCTYPE html>
 	<html lang="en" class="bg-gray-700 h-full overflow-y-scroll">
 		@Head()
-		@Body(processes, finishedProcs)
+		@Body(processes, finishedProcs, "every 2s", "every 2s")
 	</html>
 }
 
@@ -34,27 +34,42 @@ templ Header() {
 	</div>
 }
 
-templ Body(activeProcesses []models.Process, finishedProcs []models.Process) {
+templ Body(activeProcesses []models.Process, finishedProcs []models.Process, procsTrigger string, finishedTrigger string) {
 	@Header()
 	<body>
 		@Nav()
+		<!-- Processes -->
 		<div class="w-full text-center mt-3">
 			<h1 class="text-xl font-semibold text-tPalePink">
 				Process List:
 			</h1>
 		</div>
-		<!-- <div class="flex grow justify-center bg-tPink mt-5 mx-10 rounded"> -->
 		<div class="flex grow justify-center mt-3 ">
-			@PollProcessList(activeProcesses, "components/procs")
+			@PollProcessList(activeProcesses, "components/procs", procsTrigger)
 		</div>
-		<div class="w-full text-center mt-3">
-			<h1 class="text-xl font-semibold text-tPalePink">
-				Finished Processes:
-			</h1>
+		<!-- Finished Processes -->
+		<div class="flex grow flex-col  w-full justify-center text-center mt-3">
+			<div>
+				<h1 class="text-xl font-semibold text-tPalePink">
+					Finished Processes:
+				</h1>
+			</div>
+			<div class="flex justify-end w-10/12  pr-20">
+				<div class="inline-flex">
+					<button class="flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-l-xl shadow border p-2 bg-tGothicGreen ">
+						<!-- This needs to be swappable -->
+						<i class="material-icons mr-px">pause</i>
+						<span>Pause</span>
+					</button>
+					<button class="flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-r-xl shadow border p-2 bg-tGothicGreen ">
+						<i class="material-icons mr-px">refresh</i>
+						Refresh
+					</button>
+				</div>
+			</div>
 		</div>
-		<!-- <div class="flex grow justify-center bg-tPink mt-5 mx-10 rounded"> -->
 		<div class="flex grow justify-center mt-3 ">
-			@PollProcessList(finishedProcs, "components/finishedprocs")
+			@PollProcessList(finishedProcs, "components/finishedprocs", finishedTrigger)
 		</div>
 	</body>
 }

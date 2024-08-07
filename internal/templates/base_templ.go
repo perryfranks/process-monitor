@@ -36,7 +36,7 @@ func BasePage(processes []models.Process, finishedProcs []models.Process) templ.
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Body(processes, finishedProcs).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Body(processes, finishedProcs, "every 2s", "every 2s").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -100,7 +100,7 @@ func Header() templ.Component {
 	})
 }
 
-func Body(activeProcesses []models.Process, finishedProcs []models.Process) templ.Component {
+func Body(activeProcesses []models.Process, finishedProcs []models.Process, procsTrigger string, finishedTrigger string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -130,19 +130,19 @@ func Body(activeProcesses []models.Process, finishedProcs []models.Process) temp
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"w-full text-center mt-3\"><h1 class=\"text-xl font-semibold text-tPalePink\">Process List:</h1></div><!-- <div class=\"flex grow justify-center bg-tPink mt-5 mx-10 rounded\"> --><div class=\"flex grow justify-center mt-3 \">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Processes --><div class=\"w-full text-center mt-3\"><h1 class=\"text-xl font-semibold text-tPalePink\">Process List:</h1></div><div class=\"flex grow justify-center mt-3 \">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = PollProcessList(activeProcesses, "components/procs").Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = PollProcessList(activeProcesses, "components/procs", procsTrigger).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"w-full text-center mt-3\"><h1 class=\"text-xl font-semibold text-tPalePink\">Finished Processes:</h1></div><!-- <div class=\"flex grow justify-center bg-tPink mt-5 mx-10 rounded\"> --><div class=\"flex grow justify-center mt-3 \">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><!-- Finished Processes --><div class=\"flex grow flex-col  w-full justify-center text-center mt-3\"><div><h1 class=\"text-xl font-semibold text-tPalePink\">Finished Processes:</h1></div><div class=\"flex justify-end w-10/12  pr-20\"><div class=\"inline-flex\"><button class=\"flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-l-xl shadow border p-2 bg-tGothicGreen \"><!-- This needs to be swappable --><i class=\"material-icons mr-px\">pause</i> <span>Pause</span></button> <button class=\"flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-r-xl shadow border p-2 bg-tGothicGreen \"><i class=\"material-icons mr-px\">refresh</i> Refresh</button></div></div></div><div class=\"flex grow justify-center mt-3 \">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = PollProcessList(finishedProcs, "components/finishedprocs").Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = PollProcessList(finishedProcs, "components/finishedprocs", finishedTrigger).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -7,7 +7,7 @@ templ statusIcon(proc models.Process) {
 	if proc.Finished {
 		if proc.ExitStatus == 0 {
 			<div class="tooltip">
-				<i class="material-icons text-green-800">check</i>
+				<i class="material-icons text-green-500">check</i>
 				<span class="tooltiptext">Exit code: { proc.ExitStatusStr() }<br/>(Success)</span>
 			</div>
 		} else {
@@ -24,6 +24,7 @@ templ statusIcon(proc models.Process) {
 	}
 }
 
+// Renders a list of processess as cards.
 templ ProcessList(processes []models.Process) {
 	for _, proc := range processes {
 		<div class="mx-auto w-3/5 my-6 py-2 px-4 bg-tPalePink shadow-tGothicGreen border-tGothicGreen rounded-lg shadow-md">
@@ -61,8 +62,8 @@ templ ProcessList(processes []models.Process) {
 	}
 }
 
-templ PollProcessList(processes []models.Process, url string) {
-	<div class="m-4 grow w-full" hx-get={ url } hx-trigger="every 2s">
+templ PollProcessList(processes []models.Process, url string, trigger string) {
+	<div class="m-4 grow w-full" hx-get={ url } hx-trigger={ trigger }>
 		@ProcessList(processes)
 	</div>
 }
