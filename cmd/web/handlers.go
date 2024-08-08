@@ -119,8 +119,37 @@ func (app *application) finishedProcsCardList(w http.ResponseWriter, r *http.Req
 
 	// get all the procs from app
 	// pass to the temple function
+
 	procList := app.FinishedList
 	cardList := templates.ProcessList(procList)
 	app.renderTempl(w, http.StatusOK, cardList)
+
+}
+
+// values will be AUTO/STOP
+func (app *application) finishedCardPollSet(w http.ResponseWriter, r *http.Request) {
+
+	//
+
+	err := r.ParseForm()
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
+
+	// get the damage
+	auto := r.PostForm.Get("auto")
+
+	switch auto {
+	case "auto":
+		app.StatusVars.FinishedProcsListAuto = true
+	case "stop":
+		app.StatusVars.FinishedProcsListAuto = false
+	default:
+		// error no change
+		app.infoLog.Println("Incorrect value passed to finishedCardPollSet, value = ", auto)
+	}
+
+	http.Redirect(w, r, "components/finishedprocs", http.StatusSeeOther)
 
 }

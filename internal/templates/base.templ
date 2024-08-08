@@ -55,17 +55,19 @@ templ Body(activeProcesses []models.Process, finishedProcs []models.Process, pro
 				</h1>
 			</div>
 			<div class="flex justify-end w-10/12  pr-20">
-				<div class="inline-flex">
-					<button class="flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-l-xl shadow border p-2 bg-tGothicGreen ">
-						<!-- This needs to be swappable -->
-						<i class="material-icons mr-px">pause</i>
-						<span>Pause</span>
-					</button>
-					<button class="flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-r-xl shadow border p-2 bg-tGothicGreen ">
-						<i class="material-icons mr-px">refresh</i>
-						Refresh
-					</button>
-				</div>
+				<form hx-post="">
+					<div class="inline-flex">
+						<button class="flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-l-xl shadow border p-2 bg-tGothicGreen ">
+							<!-- This needs to be swappable -->
+							<i class="material-icons mr-px">pause</i>
+							<span>Pause</span>
+						</button>
+						<button class="flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-r-xl shadow border p-2 bg-tGothicGreen ">
+							<i class="material-icons mr-px">refresh</i>
+							Refresh
+						</button>
+					</div>
+				</form>
 			</div>
 		</div>
 		<div class="flex grow justify-center mt-3 ">

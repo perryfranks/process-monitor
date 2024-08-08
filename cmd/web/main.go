@@ -9,6 +9,11 @@ import (
 	"procmon.perryfanks.nerd/internal/models"
 )
 
+type StatusVars struct {
+	FinishedProcsListAuto bool // auto refresh procs (and kill user focus)
+
+}
+
 type application struct {
 	errorLog *log.Logger
 	infoLog  *log.Logger
@@ -17,6 +22,7 @@ type application struct {
 	FinishedList []models.Process
 	idCount      int
 	DisplayVars  DisplayVars
+	StatusVars   StatusVars
 }
 
 func main() {
@@ -38,6 +44,9 @@ func main() {
 		idCount:      1,
 
 		DisplayVars: dv,
+		StatusVars: StatusVars{
+			FinishedProcsListAuto: true,
+		},
 	}
 
 	app.ProcessList = append(app.ProcessList, models.Process{
