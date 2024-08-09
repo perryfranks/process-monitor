@@ -121,7 +121,17 @@ func (app *application) finishedProcsCardList(w http.ResponseWriter, r *http.Req
 	// pass to the temple function
 
 	procList := app.FinishedList
-	cardList := templates.ProcessList(procList)
+	// cardList := templates.ProcessList(procList)
+	var poll string
+	if app.StatusVars.FinishedProcsListAuto == true {
+		poll = "every 2s"
+	} else {
+		poll = ""
+	}
+
+	app.infoLog.Println("Trigger text: ", poll)
+
+	cardList := templates.PollProcessList(procList, "components/finishedprocs", poll, "finishedProcessList")
 	app.renderTempl(w, http.StatusOK, cardList)
 
 }
@@ -131,6 +141,7 @@ func (app *application) finishedCardPollSet(w http.ResponseWriter, r *http.Reque
 
 	//
 
+	app.infoLog.Println("Setting the poll rate to: ", app.StatusVars.FinishedProcsListAuto)
 	err := r.ParseForm()
 	if err != nil {
 		app.clientError(w, http.StatusBadRequest)
@@ -143,13 +154,15 @@ func (app *application) finishedCardPollSet(w http.ResponseWriter, r *http.Reque
 	switch auto {
 	case "auto":
 		app.StatusVars.FinishedProcsListAuto = true
-	case "stop":
-		app.StatusVars.FinishedProcsListAuto = false
+	case "flip":
+		app.StatusVars.FinishedProcsListAuto = !app.StatusVars.FinishedProcsListAuto
 	default:
 		// error no change
 		app.infoLog.Println("Incorrect value passed to finishedCardPollSet, value = ", auto)
 	}
 
-	http.Redirect(w, r, "components/finishedprocs", http.StatusSeeOther)
+	app.infoLog.Println("Setting the poll rate to: ", app.StatusVars.FinishedProcsListAuto)
+
+	http.Redirect(w, r, "/components/finishedprocs", http.StatusSeeOther)
 
 }

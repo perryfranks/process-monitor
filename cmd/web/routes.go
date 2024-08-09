@@ -24,6 +24,7 @@ func (app *application) routes() http.Handler {
 	router.HandlerFunc(http.MethodPost, "/api/end", app.endMonitor)
 	router.HandlerFunc(http.MethodGet, "/components/procs", app.cardList)
 	router.HandlerFunc(http.MethodGet, "/components/finishedprocs", app.finishedProcsCardList)
+	router.HandlerFunc(http.MethodPost, "/components/set/finishedpollrate", app.finishedCardPollSet)
 
 	standard := alice.New(app.recoverPanic, app.logRequest, secureHeaders)
 

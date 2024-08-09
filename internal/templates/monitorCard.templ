@@ -62,8 +62,16 @@ templ ProcessList(processes []models.Process) {
 	}
 }
 
-templ PollProcessList(processes []models.Process, url string, trigger string) {
-	<div class="m-4 grow w-full" hx-get={ url } hx-trigger={ trigger }>
+templ PollProcessList(processes []models.Process, url string, trigger string, id string) {
+	<!-- I think we only want the trigger to be set if the trigger isn't null -->
+	<div
+		id={ id }
+		class="m-4 grow w-full"
+		hx-get={ url }
+		if trigger != "" {
+			hx-trigger={ trigger }
+		}
+	>
 		@ProcessList(processes)
 	</div>
 }

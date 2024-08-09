@@ -134,15 +134,15 @@ func Body(activeProcesses []models.Process, finishedProcs []models.Process, proc
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = PollProcessList(activeProcesses, "components/procs", procsTrigger).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = PollProcessList(activeProcesses, "components/procs", procsTrigger, "runningProcessList").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><!-- Finished Processes --><div class=\"flex grow flex-col  w-full justify-center text-center mt-3\"><div><h1 class=\"text-xl font-semibold text-tPalePink\">Finished Processes:</h1></div><div class=\"flex justify-end w-10/12  pr-20\"><form hx-post=\"\"><div class=\"inline-flex\"><button class=\"flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-l-xl shadow border p-2 bg-tGothicGreen \"><!-- This needs to be swappable --><i class=\"material-icons mr-px\">pause</i> <span>Pause</span></button> <button class=\"flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-r-xl shadow border p-2 bg-tGothicGreen \"><i class=\"material-icons mr-px\">refresh</i> Refresh</button></div></form></div></div><div class=\"flex grow justify-center mt-3 \">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><!-- Finished Processes --><div class=\"flex grow flex-col  w-full justify-center text-center mt-3\"><div><h1 class=\"text-xl font-semibold text-tPalePink\">Finished Processes:</h1></div><div class=\"flex justify-end w-10/12  pr-20\"><div class=\"inline-flex\"><form hx-post=\"/components/set/finishedpollrate\" hx-target=\"#finishedProcessList\" hx-swap=\"outerHTML\"><!-- Need this to submit I'm not sure they are --><button class=\"flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-l-xl shadow border p-2 bg-tGothicGreen \" type=\"submit\" name=\"auto\" value=\"flip\"><!-- This needs to be swappable --><i class=\"material-icons mr-px\">pause</i> <span>Play/Pause</span></button></form><button class=\"flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-r-xl shadow border p-2 bg-tGothicGreen \"><i class=\"material-icons mr-px\">refresh</i> Refresh</button></div></div></div><div class=\"flex grow justify-center mt-3 \">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = PollProcessList(finishedProcs, "components/finishedprocs", finishedTrigger).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = PollProcessList(finishedProcs, "components/finishedprocs", finishedTrigger, "finishedProcessList").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
