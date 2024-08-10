@@ -14,7 +14,7 @@ import (
 	monitorapi "procmon.perryfanks.nerd/internal/monitorAPI"
 )
 
-const baseUrl = "http://localhost:4000"
+// const baseUrl = "http://localhost:4000"
 
 var monitorID int
 
@@ -69,10 +69,10 @@ func sendStart(name string, pid string) {
 
 	workspace, user := getProcEnv()
 
-	log.Print(baseUrl)
+	// log.Print(baseUrl)
 
 	payload := startPayload(name, workspace, user, pid)
-	resp, err := http.Post(baseUrl+"/api/start", "application/json", bytes.NewReader(payload))
+	resp, err := http.Post(serverURL+"/api/start", "application/json", bytes.NewReader(payload))
 	if err != nil {
 		panic(err)
 	}
@@ -122,7 +122,7 @@ func endPayload(id int, output string, exitCode int) []byte {
 func sendEnd(id int, output string, exitCode int) {
 
 	payload := endPayload(id, output, exitCode)
-	resp, err := http.Post(baseUrl+"/api/end", "application/json", bytes.NewReader(payload))
+	resp, err := http.Post(serverURL+"/api/end", "application/json", bytes.NewReader(payload))
 	if err != nil {
 		panic(err)
 	}

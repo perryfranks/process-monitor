@@ -5,3 +5,7 @@ type Message struct {
 	MessageType string      `json:"messageType"`
 	Payload     interface{} `json:"payload"`
 }
+
+type CheckHealthMsg struct {
+	Connection bool `json:"connection"`
+}

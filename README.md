@@ -1,4 +1,35 @@
-# process-monitor
+# Process Monitor
+Web server + CLI tool to monitor long running processes on multiple machines from a single interface. 
+Run commands/processes via the CLI tool and their status, running information and ultimately output will be sent to the web server. 
+
+Use this to validate long running processes are running as intended. Such as server workloads, renders, etc.
+
+## Features
+
+## Running the Server: 
+Compile with a command like 
+```
+go build -o monitorServer  ./cmd/web/
+```
+
+Then simply run it and visit http://localhost:4000. Processes with connect via the webserver and automatically be monitored
+
+## Running the CLI: 
+
+Compile with a command like: 
+```
+go build -o monitorwrap ./cmd/cli/
+```
+
+Then for the most part you can invoke commands through the cli such as 
+``` 
+./monitorwrap sleep 20 // useful for checking connections to the web server 
+./monitorwrap "sleep 20" // allows for -(-) to be correctly piped to the monitored command not the cli 
+./monitorwrap --help // get some real usage instructions 
+
+```
+
+A command is invoked by the process monitor and then status messages are sent to the webserver to handle monitoring. The output from the invoked command can either be wholly captured or dumped to stdout/stderr as normal. Default operation is captured
 
 ## TODO 
 - Fix polling with when inspecting finished procs 
