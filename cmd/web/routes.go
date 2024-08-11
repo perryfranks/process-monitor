@@ -20,11 +20,14 @@ func (app *application) routes() http.Handler {
 
 	router.HandlerFunc(http.MethodGet, "/", app.home)
 
-	router.HandlerFunc(http.MethodPost, "/api/start", app.startMonitor)
-	router.HandlerFunc(http.MethodPost, "/api/end", app.endMonitor)
 	router.HandlerFunc(http.MethodGet, "/components/procs", app.cardList)
 	router.HandlerFunc(http.MethodGet, "/components/finishedprocs", app.finishedProcsCardList)
 	router.HandlerFunc(http.MethodPost, "/components/set/finishedpollrate", app.finishedCardPollSet)
+
+	// API (CLI) routes
+	router.HandlerFunc(http.MethodPost, "/api/start", app.startMonitor)
+	router.HandlerFunc(http.MethodPost, "/api/end", app.endMonitor)
+	router.HandlerFunc(http.MethodGet, "/api/checkhealth", app.checkHealth)
 
 	standard := alice.New(app.recoverPanic, app.logRequest, secureHeaders)
 

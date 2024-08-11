@@ -166,3 +166,19 @@ func (app *application) finishedCardPollSet(w http.ResponseWriter, r *http.Reque
 	http.Redirect(w, r, "/components/finishedprocs", http.StatusSeeOther)
 
 }
+
+// /api/checkHealth
+// just return a checkHealth message with sucess = true
+func (app *application) checkHealth(w http.ResponseWriter, r *http.Request) {
+	result := monitorapi.CheckHealthMsg{
+		Connection: true,
+	}
+
+	jResult, err := json.Marshal(result)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	w.Write(jResult)
+}

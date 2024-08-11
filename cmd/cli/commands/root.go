@@ -24,6 +24,7 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(waitCmd)
+	rootCmd.AddCommand(checkHealthCmd)
 	rootCmd.PersistentFlags().StringVarP(&serverURL, "url", "u", "http://localhost:4000", "URL of the monitor server. Defaults to http://localhost:4000")
 }
 
