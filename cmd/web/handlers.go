@@ -131,8 +131,9 @@ func (app *application) finishedProcsCardList(w http.ResponseWriter, r *http.Req
 
 	app.infoLog.Println("Trigger text: ", poll)
 
-	cardList := templates.PollProcessList(procList, "components/finishedprocs", poll, "finishedProcessList")
-	app.renderTempl(w, http.StatusOK, cardList)
+	content := templates.FinishedPolledProcessList(procList, poll)
+	// content := templates.PollProcessList(procList, "components/finishedprocs", poll, "")
+	app.renderTempl(w, http.StatusOK, content)
 
 }
 

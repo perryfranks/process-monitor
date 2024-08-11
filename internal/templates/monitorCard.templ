@@ -65,7 +65,6 @@ templ ProcessList(processes []models.Process) {
 templ PollProcessList(processes []models.Process, url string, trigger string, id string) {
 	<!-- I think we only want the trigger to be set if the trigger isn't null -->
 	<div
-		id={ id }
 		class="m-4 grow w-full"
 		hx-get={ url }
 		if trigger != "" {
@@ -73,5 +72,50 @@ templ PollProcessList(processes []models.Process, url string, trigger string, id
 		}
 	>
 		@ProcessList(processes)
+	</div>
+}
+
+templ FinishedProcessList(processes []models.Process) {
+	<div class="m-4 grow w-full">
+		@ProcessList(processes)
+	</div>
+}
+
+templ FinishedPolledProcessList(processes []models.Process, trigger string) {
+	<!-- I wonder if this causes issues or if hx-get uses most specific  -->
+	<div
+		id="finished-procs-div"
+		class="flex grow flex-col  w-full justify-center text-center mt-3"
+		if trigger != "" {
+			hx-get="components/finishedprocs"
+			hx-swap="outerHTML"
+			hx-trigger={ trigger }
+		}
+	>
+		<div>
+			<h1 class="text-xl font-semibold text-tPalePink">
+				Finished Processes:
+			</h1>
+		</div>
+		<div class="flex justify-end w-10/12  pr-20">
+			<div class="inline-flex">
+				<form hx-post="/components/set/finishedpollrate" hx-target="#finished-procs-div" hx-swap="outerHTML">
+					<!-- Need this to submit I'm not sure they are -->
+					<button class="flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-l-xl shadow border p-2 bg-tGothicGreen " type="submit" name="auto" value="flip">
+						<!-- This needs to be swappable -->
+						<i class="material-icons mr-px">pause</i>
+						<span>Play/Pause</span>
+					</button>
+				</form>
+				<button class="flex items-center text-tLilac hover:text-tPink active:text-tLavender font-semibold border-gray-800 active:border-tPink rounded-r-xl shadow border p-2 bg-tGothicGreen ">
+					<i class="material-icons mr-px">refresh</i>
+					Refresh
+				</button>
+			</div>
+		</div>
+		<div class="flex grow justify-center mt-3 ">
+			<!--@PollProcessList(processes, "components/finishedprocs", trigger, "finishedProcessList") -->
+			@FinishedProcessList(processes)
+		</div>
 	</div>
 }

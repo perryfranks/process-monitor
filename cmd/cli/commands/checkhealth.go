@@ -23,9 +23,6 @@ func checkHealth() {
 	// would simply return a {"connection":true} msg
 	var response monitorapi.CheckHealthMsg
 
-	// var payload []byte
-	// payload = []byte("")
-
 	resp, err := http.Get(serverURL + "/api/checkhealth")
 	if err != nil {
 		log.Fatalf("No connection to server.\nServer url: %s\n error: %v", serverURL, err)

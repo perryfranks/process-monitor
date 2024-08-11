@@ -38,5 +38,6 @@ A command is invoked by the process monitor and then status messages are sent to
 - X Add icons for exit code success/fail
 - X fix output display. Limit width. Styling more in line with logs. 
 - Search
-- Cli check health / happy exit on no connection
+- x Cli check health / happy exit on no connection
 - cli download page? 
+- clear/delete for finished processes
