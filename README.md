@@ -32,12 +32,12 @@ Then for the most part you can invoke commands through the cli such as
 A command is invoked by the process monitor and then status messages are sent to the webserver to handle monitoring. The output from the invoked command can either be wholly captured or dumped to stdout/stderr as normal. Default operation is captured
 
 ## TODO 
-- Fix polling with when inspecting finished procs 
-    - copy output button 
-- Poll rate buttons 
+- x Fix polling with when inspecting finished procs 
+- copy output button 
+- Poll rate buttons should change text based on what is going on
 - X Add icons for exit code success/fail
 - X fix output display. Limit width. Styling more in line with logs. 
 - Search
 - x Cli check health / happy exit on no connection
 - cli download page? 
-- clear/delete for finished processes
+- x clear/delete for finished processes

@@ -23,6 +23,7 @@ func (app *application) routes() http.Handler {
 	router.HandlerFunc(http.MethodGet, "/components/procs", app.cardList)
 	router.HandlerFunc(http.MethodGet, "/components/finishedprocs", app.finishedProcsCardList)
 	router.HandlerFunc(http.MethodPost, "/components/set/finishedpollrate", app.finishedCardPollSet)
+	router.HandlerFunc(http.MethodPost, "/components/clearfinished", app.clearFinishedProcs)
 
 	// API (CLI) routes
 	router.HandlerFunc(http.MethodPost, "/api/start", app.startMonitor)

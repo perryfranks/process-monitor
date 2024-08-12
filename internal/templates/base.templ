@@ -4,7 +4,7 @@ import "procmon.perryfanks.nerd/internal/models"
 
 templ BasePage(processes []models.Process, finishedProcs []models.Process) {
 	<!DOCTYPE html>
-	<html lang="en" class="bg-gray-700 h-full overflow-y-scroll">
+	<html lang="en" class="h-full overflow-y-scroll bg-gray-700">
 		@Head()
 		@Body(processes, finishedProcs, "every 2s", "every 2s")
 	</html>
@@ -29,8 +29,8 @@ templ Head() {
 }
 
 templ Header() {
-	<div class="flex grow justify-center py-3 text-center bg-tLilac">
-		<h1 class="font-bold text-3xl text-tGothicGreen hover:text-tOlive active:text-tTan"><a href="/">Process Monitor</a></h1>
+	<div class="flex grow justify-center bg-tLilac py-3 text-center">
+		<h1 class="text-3xl font-bold text-tGothicGreen hover:text-tOlive active:text-tTan"><a href="/">Process Monitor</a></h1>
 	</div>
 }
 
@@ -39,12 +39,12 @@ templ Body(activeProcesses []models.Process, finishedProcs []models.Process, pro
 	<body>
 		@Nav()
 		<!-- Processes -->
-		<div class="w-full text-center mt-3">
-			<h1 class="text-xl font-semibold text-tPalePink">
+		<div class="mt-3 w-full text-center">
+			<h1 class="text-xl font-semibold  text-tPalePink">
 				Process List:
 			</h1>
 		</div>
-		<div class="flex grow justify-center mt-3 ">
+		<div class="mt-3 flex grow justify-center ">
 			@PollProcessList(activeProcesses, "components/procs", procsTrigger, "runningProcessList")
 		</div>
 		<!-- Finished Processes -->
@@ -54,6 +54,6 @@ templ Body(activeProcesses []models.Process, finishedProcs []models.Process, pro
 
 templ Nav() {
 	<nav class="flex grow items-center space-x-4 bg-tLavender p-2 text-lg">
-		<a class="ml-6 mr-2 font-bold hover:text-tPink active:text-tPalePink text-" href="/">Home</a>
+		<a class="text- ml-6 mr-2 font-bold hover:text-tPink active:text-tPalePink" href="/">Home</a>
 	</nav>
 }

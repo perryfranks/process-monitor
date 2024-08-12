@@ -183,3 +183,10 @@ func (app *application) checkHealth(w http.ResponseWriter, r *http.Request) {
 
 	w.Write(jResult)
 }
+
+// components/clearfinished | Clear the finished procs array completely
+func (app *application) clearFinishedProcs(w http.ResponseWriter, r *http.Request) {
+	app.FinishedList = []models.Process{}
+
+	w.WriteHeader(http.StatusNoContent)
+}

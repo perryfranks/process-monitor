@@ -28,7 +28,7 @@ func BasePage(processes []models.Process, finishedProcs []models.Process) templ.
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\" class=\"bg-gray-700 h-full overflow-y-scroll\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\" class=\"h-full overflow-y-scroll bg-gray-700\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -92,7 +92,7 @@ func Header() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex grow justify-center py-3 text-center bg-tLilac\"><h1 class=\"font-bold text-3xl text-tGothicGreen hover:text-tOlive active:text-tTan\"><a href=\"/\">Process Monitor</a></h1></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex grow justify-center bg-tLilac py-3 text-center\"><h1 class=\"text-3xl font-bold text-tGothicGreen hover:text-tOlive active:text-tTan\"><a href=\"/\">Process Monitor</a></h1></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -130,7 +130,7 @@ func Body(activeProcesses []models.Process, finishedProcs []models.Process, proc
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Processes --><div class=\"w-full text-center mt-3\"><h1 class=\"text-xl font-semibold text-tPalePink\">Process List:</h1></div><div class=\"flex grow justify-center mt-3 \">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Processes --><div class=\"mt-3 w-full text-center\"><h1 class=\"text-xl font-semibold  text-tPalePink\">Process List:</h1></div><div class=\"mt-3 flex grow justify-center \">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -172,7 +172,7 @@ func Nav() templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"flex grow items-center space-x-4 bg-tLavender p-2 text-lg\"><a class=\"ml-6 mr-2 font-bold hover:text-tPink active:text-tPalePink text-\" href=\"/\">Home</a></nav>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"flex grow items-center space-x-4 bg-tLavender p-2 text-lg\"><a class=\"text- ml-6 mr-2 font-bold hover:text-tPink active:text-tPalePink\" href=\"/\">Home</a></nav>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
