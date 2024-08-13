@@ -14,17 +14,6 @@ type StatusVars struct {
 
 }
 
-type application struct {
-	errorLog *log.Logger
-	infoLog  *log.Logger
-
-	ProcessList  []models.Process
-	FinishedList []models.Process
-	idCount      int
-	DisplayVars  DisplayVars
-	StatusVars   StatusVars
-}
-
 func main() {
 
 	addr := flag.String("addr", ":4000", "HTTP network address")
@@ -41,12 +30,17 @@ func main() {
 		infoLog:      infoLog,
 		ProcessList:  []models.Process{},
 		FinishedList: []models.Process{},
-		idCount:      1,
+
+		DisplayedProcesses:  []models.Process{},
+		MostRecentRunningID: displayEmpty,
+
+		idCount: 1,
 
 		DisplayVars: dv,
 		StatusVars: StatusVars{
 			FinishedProcsListAuto: true,
 		},
+		Paused: false,
 	}
 
 	app.ProcessList = append(app.ProcessList, models.Process{
