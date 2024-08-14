@@ -104,3 +104,21 @@ func (app *application) checkFinished(id int) bool {
 
 	return true
 }
+
+func (app *application) getRunningProc(id int) *models.Process {
+	return app.matchListOnId(app.ProcessList, id)
+}
+
+func (app *application) getFinishedId(id int) *models.Process {
+	return app.matchListOnId(app.FinishedList, id)
+}
+
+func (app *application) matchListOnId(procs []models.Process, id int) *models.Process {
+	for _, p := range app.ProcessList {
+		if p.Id == id {
+			return &p
+		}
+	}
+	return nil
+
+}

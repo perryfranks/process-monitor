@@ -27,6 +27,8 @@ func (app *application) routes() http.Handler {
 	router.HandlerFunc(http.MethodPost, "/components/set/finishedpollrate", app.finishedCardPollSet)
 	router.HandlerFunc(http.MethodPost, "/components/clearfinished", app.clearFinishedProcs)
 
+	router.HandlerFunc(http.MethodDelete, "/components/end", app.clearCard)
+
 	// API (CLI) routes
 	router.HandlerFunc(http.MethodPost, "/api/start", app.startMonitor)
 	router.HandlerFunc(http.MethodPost, "/api/end", app.endMonitor)

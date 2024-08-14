@@ -25,7 +25,7 @@ func (app *application) morphRunningProcsUpdate(w http.ResponseWriter, r *http.R
 		// render the whole list as new
 		// return
 		fmt.Println("Rending whole list")
-		page := templates.MorphRunningProcsList(app.ProcessList)
+		page := templates.MorphRunningProcsList(app.ProcessList, "fade-in", "every 2s", "/components/poll/finished", "")
 		app.renderTempl(w, http.StatusOK, page)
 		return
 	}
@@ -47,7 +47,7 @@ func (app *application) morphRunningProcsUpdate(w http.ResponseWriter, r *http.R
 
 			fmt.Println("newProcs:  ", newProcs)
 
-			page := templates.MorphRunningProcsList(newProcs)
+			page := templates.MorphRunningProcsList(newProcs, "fade-in", "every 2s", "/components/poll/finished", "")
 			app.renderTempl(w, http.StatusOK, page)
 			return
 		}
@@ -80,11 +80,23 @@ func (app *application) procAmFinished(w http.ResponseWriter, r *http.Request) {
 		// app.finishProc(id) && app.finishDisplay()
 
 		// return nothing
-		fmt.Printf("id: %v was found to be finished returning no content")
-		w.WriteHeader(http.StatusNoContent)
+		fmt.Printf("id: %v was found to be finished returning no content\n", id)
+
+		proc := *app.getFinishedId(id)
+		card := templates.MorphCard(proc, "fade-out", "every 1s", "/components/end", "delete")
+		app.renderTempl(w, http.StatusOK, card)
 	} else {
-		fmt.Printf("id: %v just quiet ending")
+		// fmt.Printf("id: %v just quiet ending\n", id)
+		proc := *app.getRunningProc(id)
+		card := templates.MorphCard(proc, "", "every 2s", "/components/poll/finished", "")
+		app.renderTempl(w, http.StatusOK, card)
 
 	}
 
+}
+
+// basically a nop
+// components/end
+func (app *application) clearCard(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
 }
