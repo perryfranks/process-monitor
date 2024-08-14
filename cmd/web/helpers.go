@@ -57,6 +57,7 @@ func (app *application) newTemplateData(r *http.Request) *templateData {
 	}
 }
 
+// Add proc to the FinishedList, remove from ProcessList and update MostRecentRunningID if needed
 func (app *application) finishProc(id int) (*models.Process, error) {
 
 	for i, elem := range app.ProcessList {
@@ -72,6 +73,18 @@ func (app *application) finishProc(id int) (*models.Process, error) {
 			}
 			app.ProcessList = append(app.ProcessList[:i], app.ProcessList[i+1:]...)
 
+			// handle the most recent
+			if app.MostRecentRunningID == id {
+				if i == 0 {
+					// just deleted the first element so then update to null
+					app.MostRecentRunningID = displayEmpty
+				} else {
+					// WARN: This seems a bit sus
+					app.MostRecentRunningID = app.ProcessList[i-1].Id
+				}
+			}
+
+			fmt.Println("MostRecentRunningID: ", app.MostRecentRunningID)
 			return proc, nil
 		}
 
@@ -79,4 +92,15 @@ func (app *application) finishProc(id int) (*models.Process, error) {
 
 	return nil, errors.New("No process found with that ID")
 
+}
+
+func (app *application) checkFinished(id int) bool {
+	for _, elem := range app.ProcessList {
+		if elem.Id == id {
+			// Process is still in the running list
+			return false
+		}
+	}
+
+	return true
 }

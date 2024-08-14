@@ -1,0 +1,55 @@
+package templates 
+
+import "procmon.perryfanks.nerd/internal/models"
+
+// just the inner cards to be composed into a greater list
+templ MorphRunningProcsList(procs []models.Process) {
+	for _, proc := range procs {
+		<div id="fade-in" class="mx-auto my-6 w-3/5 rounded-lg border-tGothicGreen bg-tPalePink px-4 py-2 shadow-md shadow-tGothicGreen" hx-get={ "/components/poll/finished/" + proc.IdString } hx-trigger="every 2s">
+			<div class="flex grow justify-center text-center">
+				<h2 class="text-center text-xl font-bold ">{ proc.Name }</h2>
+				<div class="flex w-full justify-end">
+					@statusIcon(proc)
+				</div>
+			</div>
+			<div class="flex grow">
+				<div class="flex grow flex-col justify-start">
+					<p class="text-gray-700">Workspace: { proc.Workspace }</p>
+					<p class="text-gray-700">User: { proc.User }</p>
+					<p class="text-gray-700">PID: { proc.Pid }</p>
+				</div>
+				<div class="flex grow flex-col justify-end text-end">
+					<p class="text-gray-700">ID: { proc.IdString }</p>
+					<p class="text-gray-700">Start: { proc.StartTime.Format("15:4:5 02/01/06") }</p>
+					if proc.Finished {
+						<p class="text-gray-700">End: { proc.FinishTime.Format("15:4:5 02/01/06") }</p>
+					} else {
+						<p class="h-4"></p>:
+					}
+				</div>
+			</div>
+			if proc.Finished {
+				<details class="flex grow flex-col justify-center">
+					<summary class="text-center font-semibold  hover:text-tLavender active:text-tPink">Output:</summary>
+					<pre class="border-1 mx-2 max-h-96 w-full overflow-scroll border-solid border-tGothicGreen bg-white">
+						{ proc.CapturedOut }
+					</pre>
+				</details>
+			}
+		</div>
+	}
+}
+
+// instead of swapping the whole element. Add the new cards after the existing ones
+templ MorphRunningProcsContainer(initalProcs []models.Process, url string, trigger string) {
+	<div
+		class="m-4 w-full grow"
+		hx-get={ url }
+		if trigger != "" {
+			hx-trigger={ trigger }
+		}
+		hx-swap="beforeend settle:1s"
+	>
+		@MorphRunningProcsList(initalProcs)
+	</div>
+}

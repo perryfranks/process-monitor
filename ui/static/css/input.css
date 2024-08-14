@@ -43,3 +43,12 @@ details>summary::-webkit-details-marker {
   margin-left: -60px;
   /* Use half of the width (120/2 = 60), to center the tooltip */
 }
+
+#fade-in.htmx-added {
+  opacity: 0;
+}
+
+#fade-in {
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}

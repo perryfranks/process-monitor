@@ -31,7 +31,6 @@ func main() {
 		ProcessList:  []models.Process{},
 		FinishedList: []models.Process{},
 
-		DisplayedProcesses:  []models.Process{},
 		MostRecentRunningID: displayEmpty,
 
 		idCount: 1,

@@ -68,12 +68,14 @@ func (app *application) endMonitor(w http.ResponseWriter, r *http.Request) {
 
 	// delete that process
 	finishedProc, err := app.finishProc(endMsg.Id)
+	// remove the process from the list of running vars as well
 	if err != nil {
 		fmt.Println("couldn't delete")
 		app.clientError(w, http.StatusBadRequest)
 		return
 
 	}
+
 	// update anything
 	finishedProc.FinishTime = time.Now()
 	finishedProc.Finished = true

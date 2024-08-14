@@ -22,6 +22,8 @@ func (app *application) routes() http.Handler {
 
 	router.HandlerFunc(http.MethodGet, "/components/procs", app.cardList)
 	router.HandlerFunc(http.MethodGet, "/components/finishedprocs", app.finishedProcsCardList)
+	router.HandlerFunc(http.MethodGet, "/components/poll/finished/:id", app.procAmFinished)
+	router.HandlerFunc(http.MethodGet, "/morph/current", app.morphRunningProcsUpdate)
 	router.HandlerFunc(http.MethodPost, "/components/set/finishedpollrate", app.finishedCardPollSet)
 	router.HandlerFunc(http.MethodPost, "/components/clearfinished", app.clearFinishedProcs)
 

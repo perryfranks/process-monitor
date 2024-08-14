@@ -40,7 +40,7 @@ func (app *application) finishedProcsCardList(w http.ResponseWriter, r *http.Req
 
 	app.infoLog.Println("Trigger text: ", poll)
 
-	content := templates.FinishedPolledProcessList(procList, poll, app.Pause)
+	content := templates.FinishedPolledProcessList(procList, poll, app.Paused)
 	// content := templates.PollProcessList(procList, "components/finishedprocs", poll, "")
 	app.renderTempl(w, http.StatusOK, content)
 

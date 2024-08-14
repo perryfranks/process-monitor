@@ -130,11 +130,11 @@ func Body(activeProcesses []models.Process, finishedProcs []models.Process, proc
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Processes --><div class=\"mt-3 w-full text-center\"><h1 class=\"text-xl font-semibold  text-tPalePink\">Process List:</h1></div><div class=\"mt-3 flex grow justify-center \">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Processes --><div class=\"mt-3 w-full text-center\"><h1 class=\"text-xl font-semibold  text-tPalePink\">Process List:</h1></div><div class=\"mt-3 flex grow justify-center \"><!--@PollProcessList(activeProcesses, \"components/procs\", procsTrigger, \"runningProcessList\")-->")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = PollProcessList(activeProcesses, "components/procs", procsTrigger, "runningProcessList").Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = MorphRunningProcsContainer(activeProcesses, "/morph/current", procsTrigger).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -142,7 +142,7 @@ func Body(activeProcesses []models.Process, finishedProcs []models.Process, proc
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = FinishedPolledProcessList(finishedProcs, finishedTrigger).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = FinishedPolledProcessList(finishedProcs, finishedTrigger, false).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -172,7 +172,7 @@ func Nav() templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"flex grow items-center space-x-4 bg-tLavender p-2 text-lg\"><a class=\"text- ml-6 mr-2 font-bold hover:text-tPink active:text-tPalePink\" href=\"/\">Home</a></nav>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"flex grow items-center space-x-4 bg-tLavender p-2 text-lg\"><a class=\"text- ml-6 mr-2 font-bold hover:text-tPink active:text-tPalePink\" href=\"/\">Home</a> <a class=\"text- ml-6 mr-2 font-bold hover:text-tPink active:text-tPalePink\" href=\"/morph/current\">Morph Procs</a></nav>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
