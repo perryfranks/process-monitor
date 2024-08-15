@@ -31,6 +31,10 @@ Then for the most part you can invoke commands through the cli such as
 
 A command is invoked by the process monitor and then status messages are sent to the webserver to handle monitoring. The output from the invoked command can either be wholly captured or dumped to stdout/stderr as normal. Default operation is captured
 
+## Monitoring API 
+
+The API for starting and ending monitors is quite simple and is not tied to the CLI by anything. See monitor-api.md for more information.
+
 ## TODO 
 - x Fix polling with when inspecting finished procs 
 - copy output button 
